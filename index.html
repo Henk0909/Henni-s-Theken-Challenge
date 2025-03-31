@@ -3,135 +3,313 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Henni's Theken-Challenge | Frisch Gezapft   Echt Genossen</title>
+    <title>Henni's Theke | Frisch gezapft seit 2024</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --black: #000000;
+            --white: #FFFFFF;
+            --gold: #b7a662;
+            --light-bg: #f8f8f8;
+        }
+        
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f5e9dc;
-            color: #333;
-            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--light-bg);
             margin: 0;
             padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--black);
         }
+        
         .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: white;
-            padding: 10px;
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            background: var(--white);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+            text-align: center;
+            border: 1px solid rgba(0,0,0,0.05);
         }
+        
         .logo-container {
-            margin: 20px 0;
-        }
-        .logo-container img {
-            width: 180px; /* Perfekte Größe für Bierdeckel-QR-Codes */
-            height: auto; /* Höhe passt sich automatisch an */
-            display: block;
-            margin: 0 auto;
-        }
-        h1 {
-            color: #d4a017;
-            font-size: 2.2em;
-            margin-bottom: 10px;
-        }
-        h2 {
-            color: #b8860b;
-            font-size: 1.5em;
-        }
-        .slogan {
-            font-style: italic;
             margin-bottom: 20px;
-            color: #666;
+            position: relative;
         }
-        .rules {
-            background-color: #fff9e6;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 20px 0;
-            text-align: left;
+        
+        .logo-img {
+            max-width: 280px;
+            height: auto;
+            margin: 0 auto;
+            display: block;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+            transition: transform 0.3s ease;
         }
-        button {
-            background-color: #d4a017;
-            color: white;
+        
+        .logo-img:hover {
+            transform: scale(1.03);
+        }
+        
+        .logo-divider {
+            width: 100px;
+            height: 2px;
+            background: var(--gold);
+            margin: 20px auto;
             border: none;
-            padding: 12px 25px;
-            font-size: 1.2em;
-            border-radius: 50px;
+        }
+        
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--black);
+            font-size: 1.8rem;
+            margin: 20px 0;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .rules {
+            background: rgba(183, 166, 98, 0.08);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 25px 0;
+            text-align: left;
+            border-left: 3px solid var(--gold);
+        }
+        
+        .rules h3 {
+            color: var(--black);
+            margin-top: 0;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        button {
+            background: var(--gold);
+            color: var(--black);
+            border: none;
+            padding: 14px 36px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            border-radius: 30px;
             cursor: pointer;
-            margin: 10px;
-            transition: background-color 0.3s;
+            margin: 20px 0;
+            transition: all 0.3s;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
         }
+        
         button:hover {
-            background-color: #b8860b;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(183, 166, 98, 0.3);
         }
-        #result {
-            font-size: 1.5em;
-            margin: 20px;
+        
+        button::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.8), rgba(255,255,255,0));
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        
+        button:hover::after {
+            opacity: 0.3;
+        }
+        
+        /* 3D-Würfel-Animation */
+        .dice-container {
+            perspective: 1000px;
+            width: 100px;
+            height: 100px;
+            margin: 20px auto;
+        }
+        
+        .dice {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 1s ease-out;
+        }
+        
+        .dice-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: var(--white);
+            border: 2px solid var(--gold);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.5rem;
             font-weight: bold;
-            color: #8b4513;
+            color: var(--black);
         }
-        .penalty {
-            color: #ff4500;
-            font-weight: bold;
+        
+        /* Würfelseiten positionieren */
+        .dice-face:nth-child(1) { transform: translateZ(50px); }
+        .dice-face:nth-child(2) { transform: rotateY(180deg) translateZ(50px); }
+        .dice-face:nth-child(3) { transform: rotateY(90deg) translateZ(50px); }
+        .dice-face:nth-child(4) { transform: rotateY(-90deg) translateZ(50px); }
+        .dice-face:nth-child(5) { transform: rotateX(90deg) translateZ(50px); }
+        .dice-face:nth-child(6) { transform: rotateX(-90deg) translateZ(50px); }
+        
+        @keyframes roll {
+            0% { transform: rotateX(0) rotateY(0) rotateZ(0); }
+            100% { transform: rotateX(720deg) rotateY(360deg) rotateZ(180deg); }
         }
+        
+        .rolling {
+            animation: roll 1.5s ease-out;
+        }
+        
+        .action-text {
+            font-size: 1.3rem;
+            color: var(--black);
+            margin: 5px 0;
+            font-weight: 600;
+        }
+        
+        .special {
+            background: rgba(183, 166, 98, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+        
         .footer {
             margin-top: 30px;
-            font-size: 0.9em;
-            color: #777;
+            font-size: 0.8rem;
+            color: #666;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 500px) {
+            .logo-img { max-width: 220px; }
+            h1 { font-size: 1.5rem; }
+            button { padding: 12px 28px; }
+            .dice-container { width: 80px; height: 80px; }
+            .dice-face { font-size: 2rem; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Logo (optimierte Größe) -->
         <div class="logo-container">
-            <img src="Henni`s Theke (1).png" alt="Henni's Theke Logo">
+            <img src="Henni`s Theke (1).png" alt="Henni's Theke Logo" class="logo-img">
+            <hr class="logo-divider">
         </div>
         
-        
-        <h1>Theken-Challenge</h1>
-        <h2>Beweise, dass du Zapfglück hast!</h2>
+        <h1>Bier Challenge</h1>
         
         <div class="rules">
-            <h3>Regeln:</h3>
-            <p>1. Klicke auf "Würfeln!" um dein Schicksal zu bestimmen.</p>
-            <p>2. <strong>1-3:</strong> Du musst trinken! (Schluck pro Punkt)</p>
-            <p>3. <strong>4-6:</strong> Du darfst bestimmen, wer trinkt!</p>
-            <p class="penalty">Besondere Strafe: Bei einer 1 musst du "Hendrik ist der Beste!" rufen!</p>
+            <h3>Spielregeln</h3>
+            <p>1. Klicke auf "Würfeln" für dein Ergebnis</p>
+            <p>2. Bei <strong style="color: var(--gold);">1-3</strong>: Trinke die gewürfelte Anzahl Schlucke</p>
+            <p>3. Bei <strong style="color: var(--gold);">4-6</strong>: Bestimme, wer trinken muss</p>
         </div>
         
-        <button onclick="rollDice()">Würfeln!</button>
-        <div id="result"></div>
+        <button onclick="rollDice()">Würfeln</button>
+        
+        <div id="result">
+            <div class="dice-container">
+                <div class="dice" id="dice">
+                    <div class="dice-face">1</div>
+                    <div class="dice-face">2</div>
+                    <div class="dice-face">3</div>
+                    <div class="dice-face">4</div>
+                    <div class="dice-face">5</div>
+                    <div class="dice-face">6</div>
+                </div>
+            </div>
+            <div id="action-display"></div>
+        </div>
         
         <div class="footer">
-            Nur gültig bei Henni's Theke | Scann mich auf dem Bierdeckel!
+            Nur gültig bei Henni's Theke | Frisch gezapft seit 2024
         </div>
     </div>
 
     <script>
         function rollDice() {
-            // Würfelanimation (optional)
-            const resultElement = document.getElementById("result");
-            resultElement.innerHTML = "Würfelt...";
+            const diceElement = document.getElementById("dice");
+            const actionDisplay = document.getElementById("action-display");
+            const button = document.querySelector("button");
+            
+            // Animation starten
+            diceElement.classList.add("rolling");
+            actionDisplay.innerHTML = '<div style="font-size: 1rem; margin-top: 10px;">Die Würfel rollen...</div>';
+            button.disabled = true;
+            
+            // Soundeffekt (optional)
+            try {
+                const audio = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-game-dice-roll-2000.mp3');
+                audio.volume = 0.3;
+                audio.play();
+            } catch (e) {}
             
             setTimeout(() => {
-                const dice = Math.floor(Math.random() * 6) + 1;
-                let message;
+                // Ergebnis generieren
+                const diceResult = Math.floor(Math.random() * 6) + 1;
                 
-                if (dice <= 3) {
-                    message = `🎲 Du hast eine ${dice}!
-                    <br> <span style="color:#ff4500">Trink ${dice} Schluck(e)!</span>`;
-                    if (dice === 1) {
-                        message += "<br> 👉 Rufe: 'Hendrik ist der Beste!'";
+                // Animation stoppen und Ergebnis anzeigen
+                diceElement.classList.remove("rolling");
+                const rotations = {
+                    1: 'rotateX(0deg) rotateY(0deg) rotateZ(0deg)',
+                    2: 'rotateX(180deg) rotateY(0deg) rotateZ(0deg)',
+                    3: 'rotateX(90deg) rotateY(0deg) rotateZ(0deg)',
+                    4: 'rotateX(-90deg) rotateY(0deg) rotateZ(0deg)',
+                    5: 'rotateX(0deg) rotateY(90deg) rotateZ(0deg)',
+                    6: 'rotateX(0deg) rotateY(-90deg) rotateZ(0deg)'
+                };
+                diceElement.style.transform = rotations[diceResult];
+                
+                // Aktionstext anzeigen
+                let actionText;
+                if (diceResult <= 3) {
+                    actionText = `
+                        <div class="action-text" style="color: var(--gold); margin-top: 15px;">
+                            Trinke ${diceResult} Schluck${diceResult > 1 ? 'e' : ''}!
+                        </div>
+                    `;
+                    if (diceResult === 1) {
+                        actionText += `
+                            <div class="special">
+                                Rufe: <strong>"Auf Henni's Theke!"</strong>
+                            </div>
+                        `;
                     }
                 } else {
-                    message = `🎲 Du hast eine ${dice}!
-                    <br> <span style="color:#228b22">Bestimme, wer trinkt!</span>`;
+                    actionText = `
+                        <div class="action-text" style="margin-top: 15px;">
+                            Bestimme den Trinker!
+                        </div>
+                        <div style="font-size: 0.9rem; color: #666; margin-top: 5px;">
+                            (Wem gönnst du den nächsten Zug?)
+                        </div>
+                    `;
                 }
                 
-                resultElement.innerHTML = message;
-            }, 800);
+                actionDisplay.innerHTML = actionText;
+                button.disabled = false;
+            }, 1500);
         }
     </script>
 </body>
